@@ -18,6 +18,13 @@ const users = {
     bob: { age: 25, hobby: 'reading' },
     charlie: { age: 21, hobby: 'painting' },
 };
+const items = [
+    'The Matrix',
+    'The Godfather',
+    'The Shawshank Redemption',
+    'The Lord of the Rings',
+    'The Dark Knight',
+];
 
 
 app.get('/', (req, res) => {
@@ -32,6 +39,15 @@ app.get('/profile/:username', (req, res) => {
     } else {
         res.render('pindex', { username, ...user });
     }
+});
+
+
+app.get('/search', (req, res) => {
+    const query = req.query.q;
+    //filter the results
+    const result = query ? items.filter((item) => item.toLowerCase().includes(query.toLowerCase())): items;
+
+    res.render('search', { result });
 });
 app.get('/products', (req, res) => {
     let search = req.query.search;
